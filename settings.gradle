@@ -1,0 +1,2 @@
+rootProject.name='pushExample'
+include ':app'
