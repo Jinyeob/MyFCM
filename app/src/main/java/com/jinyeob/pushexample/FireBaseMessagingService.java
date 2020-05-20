@@ -35,6 +35,17 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification().getBody());
+
+            if (sosGlobalVar.getSos()) {
+                sosGlobalVar.setSos(false);
+                sosGlobalVar.setWorkValue(0);
+                sosGlobalVar.setCurrent(0);
+
+                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("chk",0);
+                startActivity(intent);
+            }
         }
     }
 
@@ -52,7 +63,7 @@ public class FireBaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("FCM Message")
+                        .setContentTitle("경보해제 알림")
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
